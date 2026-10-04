@@ -1,0 +1,23 @@
+{
+  "name": "RenoWise — плани для дому",
+  "short_name": "RenoWise",
+  "description": "Ремонт, техніка й дрібниці для дому: варіанти, бюджет, де купувати, креслення квартири. Мешканці бачать зміни одне одного.",
+  "lang": "uk",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#070a13",
+  "theme_color": "#070a13",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "shortcuts": [
+    { "name": "Нова річ", "url": "./#/spaces" },
+    { "name": "Покупки", "url": "./#/shop" },
+    { "name": "План квартири", "url": "./#/plan" }
+  ]
+}
