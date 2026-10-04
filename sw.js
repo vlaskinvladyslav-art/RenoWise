@@ -1,6 +1,6 @@
 // Service Worker: офлайн-оболонка застосунку.
 // Збільште VERSION при релізі, щоб користувачі побачили кнопку «Оновити».
-const VERSION = 'v2';
+const VERSION = 'v3';
 const CACHE = `renowise-${VERSION}`;
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/styles.css',

@@ -269,6 +269,7 @@ document.addEventListener('input', (e) => {
   const el = e.target;
   if (el.dataset?.bind) applyBind(el);
   else if (el.dataset?.ui) ui[el.dataset.ui] = el.dataset.ui === 'joinCode' ? el.value.toUpperCase() : el.value;
+  else if (el.dataset?.live) actions[el.dataset.live]?.(el, e);
 });
 document.addEventListener('change', (e) => {
   const el = e.target;

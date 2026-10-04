@@ -582,6 +582,7 @@ export const actions = {
   },
 
   // покупки
+  'wallet-set': (el) => { prefs.wallet = el.value.trim(); savePrefs(); requestRender(); },
   'shop-filter': (el) => { ui.shopStore = el.dataset.store || null; requestRender(); },
   'shop-open': (el) => { ui.shopStore = el.dataset.store || null; go('/shop'); },
   'shop-toggle': (el) => {

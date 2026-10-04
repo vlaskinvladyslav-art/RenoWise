@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { derive, statusOf, SEQ } from '../js/model.js';
+import { derive, statusOf, SEQ, affordPlan } from '../js/model.js';
 import { parsePts, ptsToStr, dueInfo, timeAgo } from '../js/util.js';
 import { suggestIcon, iconKey } from '../js/icons.js';
 import { polyArea, polyPerim, isRect, rectPts, centroid, pointInPoly, dimsFromRooms, autoLayout, bbox } from '../js/planner.js';
@@ -25,6 +25,21 @@ test('проста річ: ціна × кількість, без розмірі
   assert.equal(t.kind, 'item');
   assert.equal(t.total, 1120);
   assert.equal(t.status, 'chosen');
+});
+
+test('«можу витратити»: вистачає на частину бажаного, де бракує — видно скільки', () => {
+  const item = (n, status, price) => [
+    { id: `t${n}`, type: 'task', spaceId: 's1', kind: 'item', title: `Річ ${n}`, status, selectedId: status === 'search' ? null : `o${n}`, work: { mode: 'fixed', price: 0 }, order: n },
+    { id: `o${n}`, type: 'option', taskId: `t${n}`, title: `Варіант ${n}`, calc: unit(price, 1), extras: [] },
+  ];
+  const d = derive(base([...item(1, 'chosen', 1000), ...item(2, 'chosen', 4000), ...item(3, 'search', 300), ...item(4, 'bought', 999)]));
+  const p = affordPlan(d.taskInfo.values(), 1500);
+  assert.deepEqual(p.rows.map((r) => [r.ti.task.id, r.ok, r.short]), [['t1', true, 0], ['t2', false, 3500], ['t3', true, 0]]);
+  assert.equal(p.left, 200);
+  assert.equal(p.takenN, 2);
+  assert.equal(p.need, 5300);
+  assert.equal(p.missing, 3800);
+  assert.equal(affordPlan(d.taskInfo.values(), 0).takenN, 0);
 });
 
 test('статуси: шукаю → обрано → замовлено → куплено; для ремонту ще й «готово»', () => {

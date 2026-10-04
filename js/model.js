@@ -104,6 +104,25 @@ function buildTask(task, space, optsByTask) {
   };
 }
 
+// «Скільки можу витратити зараз»: що з бажаного (речі, які ще не куплені) вистачає взяти, а де бракує.
+// Спершу вже обране, потім те, що ще обираю; всередині групи — від дешевшого, тож у бюджет вміститься найбільше речей.
+// Річ, на яку не вистачає, не віднімається — дешевші за нею можуть пройти.
+export function affordPlan(taskInfos, cash) {
+  const wants = [...taskInfos].filter((t) => t.kind === 'item' && t.counted && !t.final && t.total > 0
+    && !(t.seq.includes('bought') && t.idx >= t.seq.indexOf('bought')));
+  wants.sort((a, b) => (b.decided ? 1 : 0) - (a.decided ? 1 : 0) || a.total - b.total);
+  let left = Math.max(0, num(cash));
+  const rows = wants.map((ti) => {
+    const ok = ti.total <= left;
+    const short = ok ? 0 : r2(ti.total - left);
+    if (ok) left = r2(left - ti.total);
+    return { ti, cost: ti.total, ok, short };
+  });
+  const need = r2(wants.reduce((a, t) => a + t.total, 0));
+  const takenN = rows.filter((r) => r.ok).length;
+  return { rows, left, need, takenN, missing: Math.max(0, r2(need - Math.max(0, num(cash)))) };
+}
+
 export function derive(data) {
   const live = Object.values(data).filter((r) => !r.deleted);
   const spaces = live.filter((r) => r.type === 'space').sort(byOrder);

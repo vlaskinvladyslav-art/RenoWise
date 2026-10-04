@@ -3,7 +3,7 @@ const KEY = 'reno.prefs';
 export const DEFAULT_OG = 'https://api.microlink.io/?url={url}';
 export const DEFAULT_IMG = 'https://images.weserv.nl/?url={url}';
 
-export const prefs = { theme: 'auto', og: DEFAULT_OG, img: DEFAULT_IMG };
+export const prefs = { theme: 'auto', og: DEFAULT_OG, img: DEFAULT_IMG, wallet: '' };
 try { Object.assign(prefs, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch { /* приватний режим */ }
 
 export const savePrefs = () => { try { localStorage.setItem(KEY, JSON.stringify(prefs)); } catch { /* ігноруємо */ } };

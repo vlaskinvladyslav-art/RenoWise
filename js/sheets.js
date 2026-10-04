@@ -189,9 +189,9 @@ function optionForm(o, d) {
       body: html`${head}
         ${fld('Назва', inp({ bind: 'title', value: dr.title, ph: 'Модель, артикул, колір' }), '', 'f-title')}
         ${fld('Коротко: що це', inp({ bind: 'desc', value: dr.desc, ph: 'Напр.: 2 слоти, 830 Вт, нержавійка' }), 'З’явиться в згорнутій картці', 'f-desc')}
-        <div class="fgrid">
+        <div class="fgrid pq">
           ${fld('Ціна', inp({ bind: 'calc.price', value: dr.calc.price, unit: cur(), num: true }), '', 'f-price')}
-          ${fld('Кількість', inp({ bind: 'calc.qty', value: dr.calc.qty, unit: 'шт.', num: true }), '', 'f-qty')}
+          ${fld('Кільк.', inp({ bind: 'calc.qty', value: dr.calc.qty, unit: 'шт.', num: true }), '', 'f-qty')}
         </div>
         ${fld('Де купувати', inp({ bind: 'store', value: dr.store, list: 'stores', ph: 'Магазин' }), '', 'f-store')}
         <label class="fld" data-key="f-note"><span class="fld-l">Нотатка</span>
@@ -262,9 +262,9 @@ function quickForm(o, d) {
       </div>
       <div class="fsec">Етап</div>
       ${chipPick([{ v: 'chosen', label: 'Вже знаю, що куплю', icon: 'target' }, { v: 'search', label: 'Ще обираю', icon: 'search' }], dr.mode, 'mode')}
-      <div class="fgrid">
+      <div class="fgrid pq">
         ${fld('Ціна', inp({ bind: 'price', value: dr.price, unit: cur(), num: true }), dr.mode === 'search' ? 'Орієнтовна — або залиште порожньою' : '', 'f-price')}
-        ${fld('Кількість', inp({ bind: 'qty', value: dr.qty, unit: 'шт.', num: true }), '', 'f-qty')}
+        ${fld('Кільк.', inp({ bind: 'qty', value: dr.qty, unit: 'шт.', num: true }), '', 'f-qty')}
       </div>
       ${fld('Де купувати', inp({ bind: 'store', value: dr.store, list: 'stores', ph: 'Магазин' }), '', 'f-store')}
       ${fld('Коротко: що це', inp({ bind: 'desc', value: dr.desc, ph: 'Колір, розмір, модель…' }), '', 'f-desc')}
